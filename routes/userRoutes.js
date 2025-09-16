@@ -3,7 +3,6 @@ import { User } from "../models/User.js";
 
 const router = express.Router();
 
-// Crear usuario
 router.post("/", async (req, res) => {
     try {
         const user = new User(req.body);
@@ -14,20 +13,17 @@ router.post("/", async (req, res) => {
     }
 });
 
-// Obtener todos los usuarios
 router.get("/", async (req, res) => {
     const users = await User.find();
     res.json(users);
 });
 
-// Obtener un usuario por id
 router.get("/:id", async (req, res) => {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
     res.json(user);
 });
 
-// Actualizar usuario
 router.put("/:id", async (req, res) => {
     try {
         const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -37,7 +33,6 @@ router.put("/:id", async (req, res) => {
     }
 });
 
-// Eliminar usuario
 router.delete("/:id", async (req, res) => {
     await User.findByIdAndDelete(req.params.id);
     res.json({ message: "Usuario eliminado" });

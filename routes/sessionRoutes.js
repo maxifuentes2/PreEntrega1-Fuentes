@@ -5,7 +5,6 @@ import { User } from "../models/User.js";
 
 const router = express.Router();
 
-// Login
 router.post("/login", async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -17,7 +16,6 @@ router.post("/login", async (req, res) => {
     res.json({ token });
 });
 
-// Current - validar JWT
 router.get("/current", passport.authenticate("jwt", { session: false }), (req, res) => {
     res.json({ user: req.user });
 });

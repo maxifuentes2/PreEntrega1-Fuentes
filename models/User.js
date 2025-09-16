@@ -11,14 +11,12 @@ const userSchema = new mongoose.Schema({
     role: { type: String, default: "user" }
 });
 
-// Método para encriptar password antes de guardar
 userSchema.pre("save", function(next) {
     if (!this.isModified("password")) return next();
     this.password = bcrypt.hashSync(this.password, 10);
     next();
 });
 
-// Método para comparar passwords
 userSchema.methods.isValidPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 };
